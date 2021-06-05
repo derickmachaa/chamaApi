@@ -89,39 +89,7 @@ class User{
             return FALSE;
         }
     }
-
-    public function createUser(){
-        //function to create a user in the database
-        //hash password with bcrypt before storing
-        $this->password_hash=password_hash($this->sanitize($this->password), PASSWORD_BCRYPT);
-        $values = array();
-        $values=[
-            'surname' =>$this->sanitize($this->surname),
-            'first_name' =>$this->sanitize($this->first_name),
-            'middle_name' =>$this->sanitize($this->middle_name),
-            'gender' =>$this->sanitize($this->gender),
-            'DOB' =>$this->sanitize($this->DOB),
-            'id_no' =>$this->sanitize($this->id_no),
-            'email'=>$this->sanitize($this->email),
-            'password'=>$this->password_hash,
-            'marital_status'=>$this->sanitize($this->marital_status),
-            'phone_number'=>$this->sanitize($this->phone_number),
-            'join_date'=>$this->sanitize($this->join_date),
-            'county'=>$this->sanitize($this->county),
-            'sub_county'=>$this->sanitize($this->sub_county),
-            'ward'=>$this->sanitize($this->ward),
-            'location'=>$this->sanitize($this->location),
-            'profile_pic'=>$this->sanitize($this->profile_pic),
-            'isadmin'=>$this->isadmin
-        ];
-        if($this->database->createRecord($this->collection_name,$values)){
-            return TRUE;
-        }
-        else
-        {
-            return FALSE;
-        }
-    }
+    
     public function signUp(){
         //function to create a user in the database
         //hash password with bcrypt before storing
