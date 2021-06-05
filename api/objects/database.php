@@ -9,6 +9,7 @@ class Database{
         $user=DB_USER;
         $host=DB_HOST;
         $port=DB_PORT;
+
         //Connecting to MongoDB
         if(empty($user && empty($pass))){
             $uri="mongodb://$host:$port/".$this->database;
