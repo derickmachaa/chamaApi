@@ -5,13 +5,7 @@ include_once '../../config/config.php';
 // include database and object files
 include_once(ROOT.'api/objects/database.php');
 include_once(ROOT.'api/objects/user.php');
-
-//include php jwt library
-include_once(ROOT.'libs/php-jwt/src/BeforeValidException.php');
-include_once(ROOT.'libs/php-jwt/src/ExpiredException.php');
-include_once(ROOT.'libs/php-jwt/src/SignatureInvalidException.php');
-include_once(ROOT.'libs/php-jwt/src/JWT.php');
-use Firebase\JWT\JWT;
+include_once(ROOT.'api/objects/auth.php');
 
 //headers required
 header("Access-Control-Allow-Origin: ".URL);
@@ -20,9 +14,11 @@ header("Access-Control-Allow-Methods: GET,PUT");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-//instantiate the database and user object
+//instantiate the objects
 $database = new Database();
 $user = new User($database);
+$auth =  new Auth($database);
+
 //get data from put request
 if($_SERVER['REQUEST_METHOD']=="GET"){
     //check if http authorization header has been set or not
@@ -33,22 +29,21 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
     }
     else
     {
-        //try to decode the jwt
+        //check if the token is valid
         $autharray = explode(" ",$_SERVER['HTTP_AUTHORIZATION']);
         $jwt=$autharray[1];
-        if($jwt){
-            try{
-                $decoded = JWT::decode($jwt, JWT_KEY,array('HS256'));
-                //if successul pic usier data and return it
-                $user->id = $decoded->data->id;
+        if($jwt)
+        {
+            $decoded=$auth->Decode($jwt);
+            if($decoded['valid']){
+                $user->id=$decoded['data']->data->id;
                 $user_data=$user->getUserByID();
                 echo json_encode($user_data);
             }
-            catch(Exception $e){
-                //set response code to 401
+            else
+            {
                 http_response_code(401);
-                //show authentication denied
-                echo json_encode(array("message"=>"Access Denied","error"=>$e->getMessage()));
+                echo json_encode($decoded['data']);
             }
         }
         else
@@ -69,9 +64,8 @@ elseif($_SERVER['REQUEST_METHOD']=="PUT"){
         $autharray = explode(" ",$_SERVER['HTTP_AUTHORIZATION']);
         $jwt=$autharray[1];
         if($jwt){
-            try{
-                $decoded = JWT::decode($jwt, JWT_KEY,array('HS256'));
-                //if successul pic usier data and return it
+            $decoded = $auth->Decode($jwt);
+            if($decoded['valid']){
                 $data = json_decode(file_get_contents("php://input"));
                 $user->email = $decoded->data->email;
                 $user->setUserProfile();
@@ -96,11 +90,9 @@ elseif($_SERVER['REQUEST_METHOD']=="PUT"){
                     echo json_encode(array("message"=>"successfully updated"));
                 }
             }
-            catch(Exception $e){
-                //set response code to 401
+            else{
                 http_response_code(401);
-                //show authentication denied
-                echo json_encode(array("message"=>"Access Denied","error"=>$e->getMessage()));
+                echo json_encode($decoded['data']);
             }
         }
         else
