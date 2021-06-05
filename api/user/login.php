@@ -7,6 +7,7 @@ include_once(ROOT.'api/objects/database.php');
 include_once(ROOT.'api/objects/user.php');
 use \Firebase\JWT\JWT;
 
+
 // required headers
 header("Access-Control-Allow-Origin: ".URL);
 header("Content-Type: application/json; charset=UTF-8");
