@@ -4,7 +4,7 @@ A rest api  for chama application
 install dependencies
 ```console 
 sudo apt-get install php-mongodb
-git clone https://github.com/derickmachaa/chamaApi.git`
+git clone https://github.com/derickmachaa/chamaApi.git
 cd chamaApi
 php -S host:port
 eg 
