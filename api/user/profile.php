@@ -5,8 +5,12 @@ include_once '../../config/config.php';
 // include database and object files
 include_once(ROOT.'api/objects/database.php');
 include_once(ROOT.'api/objects/user.php');
-//include jwt files
-require(ROOT.'JWT/vendor/autoload.php');
+
+//include php jwt library
+include_once(ROOT.'libs/php-jwt/src/BeforeValidException.php');
+include_once(ROOT.'libs/php-jwt/src/ExpiredException.php');
+include_once(ROOT.'libs/php-jwt/src/SignatureInvalidException.php');
+include_once(ROOT.'libs/php-jwt/src/JWT.php');
 use Firebase\JWT\JWT;
 
 //headers required
