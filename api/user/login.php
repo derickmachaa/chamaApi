@@ -2,7 +2,13 @@
 //include config file
 include_once '../../config/config.php';
 
-require(ROOT.'JWT/vendor/autoload.php');
+//include php jwt library
+include_once(ROOT.'libs/php-jwt/src/BeforeValidException.php');
+include_once(ROOT.'libs/php-jwt/src/ExpiredException.php');
+include_once(ROOT.'libs/php-jwt/src/SignatureInvalidException.php');
+include_once(ROOT.'libs/php-jwt/src/JWT.php');
+
+//include objects
 include_once(ROOT.'api/objects/database.php');
 include_once(ROOT.'api/objects/user.php');
 use \Firebase\JWT\JWT;
