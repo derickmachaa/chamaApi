@@ -67,7 +67,7 @@ elseif($_SERVER['REQUEST_METHOD']=="PUT"){
             $decoded = $auth->Decode($jwt);
             if($decoded['valid']){
                 $data = json_decode(file_get_contents("php://input"));
-                $user->email = $decoded->data->email;
+                $user->email = $decoded['data']->data->email;
                 $user->setUserProfile();
                 if(isset($data->surname)){$user->surname = $data->surname;}
                 if(isset($data->first_name)){$user->first_name = $data->first_name;}
