@@ -4,8 +4,13 @@ include_once '../../config/config.php';
 
 include_once(ROOT.'api/objects/database.php');
 include_once(ROOT.'api/objects/user.php');
-//the phpmailer to help send emails
-require(ROOT.'PHPMAILER/vendor/autoload.php');
+//use phpmailer to help send emails
+include_once(ROOT.'libs/phpmailer/src/Exception.php');
+include_once(ROOT.'libs/phpmailer/src/SMTP.php');
+include_once(ROOT.'libs/phpmailer/src/OAuth.php');
+include_once(ROOT.'libs/phpmailer/src/Exception.php');
+include_once(ROOT.'libs/phpmailer/src/PHPMailer.php');
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -48,8 +53,7 @@ if($valid){
     $mail->FromName = EMAIL_NAME;
     $mail->Subject = "Reset Password";
     $mail->AddAddress($to);
-    $mail->Body = "Your Password reset Token is: $token
-    ingore if you did not request for a password reset";
+    $mail->Body = "Your Password reset Token is: $token\n\n\nIGNORE if you did not request for a password reset";
     if($mail->Send()){
         http_response_code(201);
     }
