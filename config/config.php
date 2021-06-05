@@ -32,5 +32,5 @@ define('EMAIL_DEBUG',0);//whether debug is turned on
 //fix cross origin errors
 //enter url name
 define('URL','http://localhost')
-
+//end url name
 ?>
