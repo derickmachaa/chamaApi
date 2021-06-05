@@ -1,2 +1,2 @@
 # chamaApi
-backend chama api
+a rest api  for chama apps
