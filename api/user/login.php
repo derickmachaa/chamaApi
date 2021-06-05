@@ -13,7 +13,6 @@ include_once(ROOT.'api/objects/database.php');
 include_once(ROOT.'api/objects/user.php');
 use \Firebase\JWT\JWT;
 
-
 // required headers
 header("Access-Control-Allow-Origin: ".URL);
 header("Content-Type: application/json; charset=UTF-8");
@@ -31,7 +30,7 @@ $user->email = $data->email;
 
 //check if login is valid and return jwt token
 if($user->checkLogin()&&password_verify($data->password,$user->password)){
-    //if true set http code to 200 and respond with jwt token
+    //if true set http code to 200 and respond with jwt web token
     http_response_code(200);
     $token = array(
        "iat" => $issued_at,
