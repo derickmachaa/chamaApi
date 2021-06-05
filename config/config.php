@@ -7,9 +7,9 @@ define('ROOT', __DIR__ .'/../');
 //database is mongo this section includes the mongo config files
 define('DB_HOST','localhost'); //specify the host here
 define('DB_PORT',27017);//specify the port  here
-define('DB_NAME','chama');//specify the dbname here cant be blank
-define('DB_USER','chama');//specify the user here leave blank if none
-define('DB_PASS','chama');/specify the user password here leave blank if none
+define('DB_NAME','');//specify the dbname here cant be blank
+define('DB_USER','');//specify the user here leave blank if none
+define('DB_PASS','');//specify the user password here leave blank if none
 //end mongo config
 
 //jwt config is in this section
