@@ -2,16 +2,10 @@
 //include config file
 include_once '../../config/config.php';
 
-//include php jwt library
-include_once(ROOT.'libs/php-jwt/src/BeforeValidException.php');
-include_once(ROOT.'libs/php-jwt/src/ExpiredException.php');
-include_once(ROOT.'libs/php-jwt/src/SignatureInvalidException.php');
-include_once(ROOT.'libs/php-jwt/src/JWT.php');
-
 //include objects
 include_once(ROOT.'api/objects/database.php');
 include_once(ROOT.'api/objects/user.php');
-use \Firebase\JWT\JWT;
+include_once(ROOT.'api/objects/auth.php');
 
 // required headers
 header("Access-Control-Allow-Origin: ".URL);
@@ -23,6 +17,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 //instantiate objects
 $database = new Database();
 $user = new User($database);
+$auth = new Auth();
 
 //get posted data
 $data = json_decode(file_get_contents("php://input"));
@@ -42,11 +37,11 @@ if($user->checkLogin()&&password_verify($data->password,$user->password)){
            "isadmin" => $user->isadmin
        )
     );
-    $jwt=JWT::encode($token,JWT_KEY);
+    
     echo json_encode(
         array(
             "message"=>"authentication succesful",
-            "jwt"=>$jwt
+            "jwt"=>$auth->Encode($token)
             )
         );
 
