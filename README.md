@@ -5,7 +5,7 @@ install dependencies
 ```console 
 sudo apt-get install php-mongodb
 git clone https://github.com/derickmachaa/chamaApi.git`
-cd chamaApi`
+cd chamaApi
 php -S host:port
 eg 
 php -S localhost:8000
