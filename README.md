@@ -1,2 +1,2 @@
 # chamaApi
-a rest api  for chama apps
+A rest api  for chama application
