@@ -79,7 +79,7 @@ class User{
             foreach($data as $row){
                 $this->password = $row->password;
                 $this->id = $row->_id;
-                $this->is_admin;
+                $this->is_admin = $row->is_admin;
             }
             return TRUE;
 
