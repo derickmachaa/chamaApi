@@ -24,7 +24,7 @@ class User{
     public $ward;
     public $location;
     public $profile_pic;
-    public $isadmin;
+    public $is_admin;
     public $token;
     //
     public $cash;
@@ -79,7 +79,7 @@ class User{
             foreach($data as $row){
                 $this->password = $row->password;
                 $this->id = $row->_id;
-                $this->isadmin;
+                $this->is_admin;
             }
             return TRUE;
 
@@ -103,7 +103,7 @@ class User{
             'email'=>$this->sanitize($this->email),
             'password'=>$this->password_hash,
             'join_date'=>$this->sanitize($this->join_date),
-            'isadmin'=>$this->isadmin
+            'is_admin'=>$this->is_admin
         ];
         if($this->database->createRecord($this->collection_name,$values)){
             return TRUE;
@@ -218,7 +218,7 @@ class User{
             'ward'=>$this->sanitize($this->ward),
             'location'=>$this->sanitize($this->location),
             'profile_pic'=>$this->sanitize($this->profile_pic),
-            'isadmin'=>$this->isadmin
+            'is_admin'=>$this->is_admin
             
         ]];
          if($this->database->updateOne($this->collection_name,$filter,$values))
