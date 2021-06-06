@@ -26,6 +26,18 @@ class Auth{
                 return array("valid"=>false,"data"=>$e->getMessage());
             }
     }
-
+    //function to check if jwt belongs to admin
+    public function checkAdmin($jwt){
+        $decoded=$this->Decode($jwt);
+        if($decoded['valid']){
+            $data=$decoded['data'];
+            if($data->data->is_admin){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
 }
 ?>
