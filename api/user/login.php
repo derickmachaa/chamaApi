@@ -34,7 +34,8 @@ if($user->checkLogin()&&password_verify($data->password,$user->password)){
        "iss" => JWT_ISSUER,
        "data" => array(
            "id" => $user->id->__toString(),
-           "is_admin" => $user->is_admin
+           "is_admin" => $user->is_admin,
+           "email" => $user->email
        )
     );
     
