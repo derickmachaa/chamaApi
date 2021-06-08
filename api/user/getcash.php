@@ -26,7 +26,7 @@ if($_SERVER['HTTP_AUTHORIZATION']){
         $data=$decoded['data']->data;
         $user->email=$data->email;
         $user->setUserProfile();
-        echo json_encode(($user->getAccountBal()));
+        echo json_encode($user->getAccountBal());
 
     }
 // }
