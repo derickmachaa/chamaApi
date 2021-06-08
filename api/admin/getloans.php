@@ -24,7 +24,7 @@ if(isset($_SERVER['HTTP_AUTHORIZATION'])){
     $jwt=$autharray[1];
     if($auth->checkAdmin($jwt)){
         //get the loans
-        $cursor=$loan->getLoans();
+        $cursor=$loan->getPendingLoans();
         foreach ($cursor as $row) {
             $loan_list=array(
                 "id"=>$row->_id->__toSting(),
