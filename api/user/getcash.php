@@ -28,12 +28,13 @@ if($_SERVER['HTTP_AUTHORIZATION']){
         $user->setUserProfile();
         echo json_encode($user->getAccountBal());
 
+    }else{
+        http_response_code(401);
+        echo json_encode(array("message"=>"access denied"));
     }
-// }
-// if(isset($data->id)){
-//     $user->id = $data->id;
-//     $user->email = $data->email;
-//     $user->setUserProfile();
-// }
+}
+else{
+    http_response_code(400);
+    echo json_encode(array("message"=>"authorization required"));
 }
 ?>
