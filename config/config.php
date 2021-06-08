@@ -8,8 +8,8 @@ define('ROOT', __DIR__ .'/../');
 define('DB_HOST','localhost'); //specify the host here
 define('DB_PORT',27017);//specify the port  here
 define('DB_NAME','chama');//specify the dbname here cant be blank
-define('DB_USER','chama');//specify the user here leave blank if none
-define('DB_PASS','chama');//specify the user password here leave blank if none
+define('DB_USER','');//specify the user here leave blank if none
+define('DB_PASS','');//specify the user password here leave blank if none
 //end mongo config
 
 //jwt config is in this section
@@ -34,6 +34,7 @@ define('EMAIL_DEBUG',0);//whether debug is turned on
 define('URL','http://localhost');
 //end url name
 
-//the interest rate for all loans is defined here
+//loans configuration 
 define('INTEREST',20);
+define('MINIMUM_LOAN',1000);
 ?>
