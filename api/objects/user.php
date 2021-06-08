@@ -27,7 +27,8 @@ class User{
     public $is_admin;
     public $token;
     //
-    public $cash;
+    public $account_no;
+    public $account_balance;
   
     // constructor with $db as database connection
     public function __construct($db){
@@ -74,13 +75,20 @@ class User{
     }
     public function checkLogin(){
         //set the password from the database that a user requires to login and return true if user exists
-        $data = $this->getUserByEmail();
-        if($data){
-            foreach($data as $row){
-                $this->password = $row->password;
-                $this->id = $row->_id;
-                $this->is_admin = $row->is_admin;
-            }
+        $filter=['email'=>$this->sanitize($this->email)];
+        $option=[
+            'projection'=>[
+                '_id'=>1,
+                'password'=>2,
+                'is_admin'=>3
+            ]
+            ];
+        $found=$this->database->queryData($this->collection_name,$filter,$option);
+        if($found){
+            $data=get_object_vars($found[0]);
+            $this->id=$data['_id'];
+            $this->password=$data['password'];
+            $this->is_admin=$data['is_admin'];
             return TRUE;
 
         }
@@ -191,6 +199,8 @@ class User{
                 $this->ward = $row->ward;
                 $this->location = $row->location;
                 $this->profile_pic = $row->profile_pic;
+                $this->account_balance = $row->account_balance;
+                $this->account_no   = $row->account_no;
             }
         }
     }
@@ -230,15 +240,14 @@ class User{
             return FALSE;
         }
     }
-    public function getCash(){
+    public function getAccountBal(){
         $this->id=$this->sanitize($this->id);
         $filter=["_id"=>new MongoDB\BSON\ObjectId($this->sanitize($this->id))];
-        $option=[];
+        $option=[
+            'projection'=>["account_balance"=>2,"_id"=>0]
+        ];
         $values=$this->database->queryData($this->collection_name,$filter,$option);
-        foreach($values as $row){
-            $this->cash=$row->cash;
-        }
-            return $this->cash;
+        return $values[0];
 
     }
     
