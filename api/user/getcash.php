@@ -4,6 +4,7 @@ include_once '../../config/config.php';
 //include the user and database objects
 include(ROOT.'api/objects/database.php');
 include(ROOT.'api/objects/user.php');
+include(ROOT.'api/objects/auth.php');
 
 //include the required headers
 header("Access-Control-Allow-Origin: ".URL);
@@ -15,12 +16,24 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 //instantiate objects
 $database  = new Database();
 $user = new User($database);
+$auth = new Auth();
 $data = json_decode(file_get_contents("php://input"));
-if(isset($data->id)){
-    $user->id = $data->id;
-}
-//check method if is get
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    echo json_encode(array("cash"=>$user->getCash()));
+if($_SERVER['HTTP_AUTHORIZATION']){
+    $autharray=explode(" ",$_SERVER['HTTP_AUTHORIZATION']);
+    $jwt=$autharray[1];
+    $decoded=$auth->Decode($jwt);
+    if($decoded['valid']){
+        $data=$decoded['data']->data;
+        $user->email=$data->email;
+        $user->setUserProfile();
+        echo json_encode(($user->getAccountBal()));
+
+    }
+// }
+// if(isset($data->id)){
+//     $user->id = $data->id;
+//     $user->email = $data->email;
+//     $user->setUserProfile();
+// }
 }
 ?>
