@@ -2,7 +2,7 @@
 class User{
   
     // database connection and table name
-    private $database;
+    public $database;
     private $collection_name;
   
     // object properties
