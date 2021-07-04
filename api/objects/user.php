@@ -1,4 +1,5 @@
 <?php
+//this file is to handle all user operations in this file
 class User{
   
     // database connection and table name
@@ -26,9 +27,6 @@ class User{
     public $profile_pic;
     public $is_admin;
     public $token;
-    //
-    public $account_no;
-    public $account_balance;
   
     // constructor with $db as database connection
     public function __construct($db){
@@ -199,8 +197,6 @@ class User{
                 $this->ward = $row->ward;
                 $this->location = $row->location;
                 $this->profile_pic = $row->profile_pic;
-                $this->account_balance = $row->account_balance;
-                $this->account_no   = $row->account_no;
             }
         }
     }
@@ -240,16 +236,7 @@ class User{
             return FALSE;
         }
     }
-    public function getAccountBal(){
-        $this->id=$this->sanitize($this->id);
-        $filter=["_id"=>new MongoDB\BSON\ObjectId($this->sanitize($this->id))];
-        $option=[
-            'projection'=>["account_balance"=>2,"_id"=>0]
-        ];
-        $values=$this->database->queryData($this->collection_name,$filter,$option);
-        return $values[0];
-
-    }
+    
     
 }
 ?>
