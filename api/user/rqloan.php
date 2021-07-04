@@ -6,7 +6,7 @@ include_once '../../config/config.php';
 include_once(ROOT.'api/objects/database.php');
 include_once(ROOT.'api/objects/user.php');
 include_once(ROOT.'api/objects/auth.php');
-include_once(ROOT.'api/objects/loan.php');
+include_once(ROOT.'api/objects/accounts.php');
 
 // required headers
 header("Access-Control-Allow-Origin: ".URL);
@@ -35,6 +35,8 @@ if($_SERVER["HTTP_AUTHORIZATION"]){
             $data=$decoded["data"]->data;
             $loan->id=$data->id;
             $loan->email=$data->email;
+            $loan->setUserProfile();
+            $loan->setAccountNo();
             //get account balance in users account
             $account_balance=$loan->getAccountBal()->account_balance;
             if($amount<MINIMUM_LOAN){
@@ -45,7 +47,6 @@ if($_SERVER["HTTP_AUTHORIZATION"]){
                 echo json_encode(array("message"=>"Greater than the amount you can borrow","maximum_amount"=>$account_balance));
             }else{
                 http_response_code(201);
-                $loan->setUserProfile();
                 $loan->requestLoan($amount);
                 //echo json_encode($loan->collection_name);
             }
